@@ -1,0 +1,15 @@
+{
+  "originHash" : "9510d7897006611332e7524b84989ec513db374f360ae93e3f60b32a5b6111bb",
+  "pins" : [
+    {
+      "identity" : "behindecs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/victorabroum/BehindECS",
+      "state" : {
+        "branch" : "main",
+        "revision" : "48f9937d3598b8780d813dc7b084234b17acc444"
+      }
+    }
+  ],
+  "version" : 3
+}
