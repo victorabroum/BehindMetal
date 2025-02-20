@@ -24,7 +24,7 @@ open class CameraSystem: BBaseSystem {
             if let cameraComp = entityManager.getComponent(ofType: CameraComponent.self, from: entity),
                cameraComp.isActive {
                 
-                cameraComp.rotation.y += 0.01
+//                cameraComp.rotation.y += 0.01
                 
                 scene.sceneConstants.projectionMatrix = cameraComp.projectionMatrix
                 scene.sceneConstants.viewMatrix = cameraComp.viewMatrix

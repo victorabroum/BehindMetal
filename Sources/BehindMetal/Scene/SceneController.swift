@@ -30,7 +30,7 @@ open class SceneController {
     private func setupDefaultCameraSystem() {
         let cameraComp = CameraComponent()
         cameraComp.isActive = true
-        cameraComp.position.z = 5
+        cameraComp.position.z = 10
         let camera = entityManager.createEntity()
         entityManager.addComponent(to: camera, cameraComp)
         
@@ -45,7 +45,11 @@ open class SceneController {
 
 extension SceneController: SceneRendererDelegate {
     public func render(commandEncoder: MTLRenderCommandEncoder, atTime time: Float) {
+        
+        sceneConstants.timeElapsed += time
+        
         commandEncoder.setVertexBytes(&sceneConstants, length: SceneConstants.stride, index: 1)
+        commandEncoder.setFragmentBytes(&sceneConstants, length: SceneConstants.stride, index: 1)
         
         for system in self.systems {
             system.render(commandEncoder: commandEncoder, deltaTime: time)

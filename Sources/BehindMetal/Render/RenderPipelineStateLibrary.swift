@@ -59,6 +59,11 @@ public class RenderPipelineStateLibrary {
         vertexDescriptor.attributes[2].offset = SIMD3<Float>.size + SIMD2<Float>.size
         vertexDescriptor.attributes[2].bufferIndex = 0
         
+        // uv Normal
+        vertexDescriptor.attributes[3].format = .float3
+        vertexDescriptor.attributes[3].offset = SIMD3<Float>.size + SIMD2<Float>.size + SIMD4<Float>.size
+        vertexDescriptor.attributes[3].bufferIndex = 0
+        
         vertexDescriptor.layouts[0].stride = Vertex.stride
         
         pipelineDescriptor.vertexDescriptor = vertexDescriptor

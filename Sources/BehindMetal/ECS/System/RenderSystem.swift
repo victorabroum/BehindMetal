@@ -15,8 +15,8 @@ class RenderSystem: BBaseSystem {
         for entity in entities {
             if let renderComp = entityManager.getComponent(ofType: RenderComponent.self, from: entity),
                let transformComp = entityManager.getComponent(ofType: TransformComponent.self, from: entity) {
-                
                 commandEncoder.setVertexBytes(&transformComp.modelConstant, length: ModelConstants.size, index: 2)
+                
                 renderComp.renderable.draw(commandEncoder: commandEncoder)
                 
             }

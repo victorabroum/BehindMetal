@@ -34,11 +34,12 @@ public struct Vertex: Sizeable {
     var position: SIMD3<Float>
     var texCoord: SIMD2<Float>
     var color: SIMD4<Float> = .one
-    var uvNormal: SIMD2<Float> = .zero
+    var uvNormal: SIMD3<Float> = .init(0, 0, 1)
 }
 
 extension SIMD3: Sizeable { }
 extension SIMD2: Sizeable { }
+extension SIMD4: Sizeable { }
 extension Float: Sizeable { }
 extension UInt32: Sizeable { }
 
@@ -49,6 +50,8 @@ public struct ModelConstants: Sizeable {
 public struct SceneConstants: Sizeable {
     var viewMatrix = matrix_identity_float4x4
     var projectionMatrix = matrix_identity_float4x4
+    
+    var timeElapsed: Float = 0
 }
 
 public extension SIMD3 where Scalar == Float {

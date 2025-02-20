@@ -102,4 +102,20 @@ extension matrix_float4x4 {
             SIMD4<Float>(0, 0, wzScale, 0)
         ))
     }
+    
+    static func orthographicProjection(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) -> matrix_float4x4 {
+        let a = 2.0 / (right - left)
+        let b = 2.0 / (top - bottom)
+        let c = -2.0 / (far - near)
+        let tx = -(right + left) / (right - left)
+        let ty = -(top + bottom) / (top - bottom)
+        let tz = -(far + near) / (far - near)
+        
+        return matrix_float4x4(columns: (
+            SIMD4<Float>(a,  0,  0,  0),
+            SIMD4<Float>(0,  b,  0,  0),
+            SIMD4<Float>(0,  0,  c,  0),
+            SIMD4<Float>(tx, ty, tz, 1)
+        ))
+    }
 }
