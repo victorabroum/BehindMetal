@@ -34,8 +34,7 @@ public class RenderPipelineStateLibrary {
         blendDescriptor.alphaBlendOperation = .add
         blendDescriptor.sourceRGBBlendFactor = .sourceAlpha
         blendDescriptor.destinationRGBBlendFactor = .oneMinusSourceAlpha
-        blendDescriptor.sourceAlphaBlendFactor = .sourceAlpha
-        blendDescriptor.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+
         blendDescriptor.pixelFormat = .bgra8Unorm
 
         pipelineDescriptor.colorAttachments[0] = blendDescriptor
