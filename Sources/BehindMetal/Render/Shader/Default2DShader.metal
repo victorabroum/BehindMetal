@@ -26,5 +26,7 @@ fragment float4 fragment_default2D(RasterizeData rd [[ stage_in ]],
     
     float4 textureColor = texture.sample(textureSampler, rd.texCoords);
     
+    if (textureColor.a < 0.01) { discard_fragment(); }
+    
     return textureColor;
 }

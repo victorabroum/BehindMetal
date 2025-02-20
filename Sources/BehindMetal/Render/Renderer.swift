@@ -29,6 +29,8 @@ public class Renderer: NSObject, MTKViewDelegate {
               let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         else { return }
 
+        commandEncoder.setDepthStencilState(DepthStencilStateLibrary.main.basic)
+        
         sceneRenderDelegate?.render(commandEncoder: commandEncoder, atTime: 1 / Float(view.preferredFramesPerSecond))
         
         commandEncoder.endEncoding()
