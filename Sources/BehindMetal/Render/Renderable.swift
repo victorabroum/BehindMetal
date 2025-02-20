@@ -8,6 +8,6 @@
 
 import MetalKit
 
-protocol Renderable {
+public protocol Renderable {
     func draw(commandEncoder: MTLRenderCommandEncoder)
 }

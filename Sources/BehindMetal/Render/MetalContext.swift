@@ -11,8 +11,8 @@ import MetalKit
 public class MetalContext {
     nonisolated(unsafe) public static let shared = MetalContext()
     
-    private(set) var device: MTLDevice
-    private(set) var commandQueue: MTLCommandQueue
+    public var device: MTLDevice
+    public var commandQueue: MTLCommandQueue
 
     private init() {
         self.device = MTLCreateSystemDefaultDevice()!

@@ -8,21 +8,21 @@
 
 import MetalKit
 
-class Renderer: NSObject, MTKViewDelegate {
+public class Renderer: NSObject, MTKViewDelegate {
     
     private let commandQueue: MTLCommandQueue
 
     public var sceneRenderDelegate: SceneRendererDelegate?
     
-    override init() {
+    override public init() {
         self.commandQueue = MetalContext.shared.device.makeCommandQueue()!
     }
     
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         
     }
     
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         guard let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor,
               let commandBuffer = commandQueue.makeCommandBuffer(),

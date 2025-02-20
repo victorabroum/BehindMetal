@@ -14,17 +14,31 @@ public enum RenderPipelineType {
 public class RenderPipelineStateLibrary {
     var libraries: [RenderPipelineType: MTLRenderPipelineState] = [:]
     
-    private func createDefault2D() -> MTLRenderPipelineState? {
+    public static func createDefault2D() -> MTLRenderPipelineState? {
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         let device = MetalContext.shared.device
         
-        guard let library = device.makeDefaultLibrary() else {
+        guard let libraryURL = Bundle.module.url(forResource: "default", withExtension: "metallib"),
+              let library = try? device.makeLibrary(URL: libraryURL) else {
             print("Couldn't create a Default Library")
             return nil
         }
         
         pipelineDescriptor.vertexFunction = library.makeFunction(name: "vertex_default2D")
         pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_default2D")
+        
+        
+        let blendDescriptor = MTLRenderPipelineColorAttachmentDescriptor()
+        blendDescriptor.isBlendingEnabled = true
+        blendDescriptor.rgbBlendOperation = .add
+        blendDescriptor.alphaBlendOperation = .add
+        blendDescriptor.sourceRGBBlendFactor = .sourceAlpha
+        blendDescriptor.destinationRGBBlendFactor = .oneMinusSourceAlpha
+        blendDescriptor.sourceAlphaBlendFactor = .sourceAlpha
+        blendDescriptor.destinationAlphaBlendFactor = .oneMinusSourceAlpha
+        blendDescriptor.pixelFormat = .bgra8Unorm
+
+        pipelineDescriptor.colorAttachments[0] = blendDescriptor
         
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         

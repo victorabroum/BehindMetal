@@ -21,6 +21,10 @@ vertex RasterizeData vertex_default2D(const VertexIn vIn [[ stage_in ]],
 
 fragment float4 fragment_default2D(RasterizeData rd [[ stage_in ]],
                                      texture2d<float> texture [[texture(0)]]) {
-    constexpr sampler textureSampler(coord::normalized, filter::nearest, address::repeat);
-    return texture.sample(textureSampler, rd.texCoords);
+    
+    constexpr sampler textureSampler(filter::nearest, address::repeat);
+    
+    float4 textureColor = texture.sample(textureSampler, rd.texCoords);
+    
+    return textureColor;
 }

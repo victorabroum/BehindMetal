@@ -8,24 +8,26 @@
 import MetalKit
 import BehindECS
 
-class TransformComponent: BComponent {
-    var position: SIMD3<Float> = .zero {
+open class TransformComponent: BComponent {
+    public var position: SIMD3<Float> = .zero {
         didSet {
             updateModelConstant()
         }
     }
-    var scale: SIMD3<Float> = SIMD3<Float>(1, 1, 1) {
+    public var scale: SIMD3<Float> = SIMD3<Float>(1, 1, 1) {
         didSet {
             updateModelConstant()
         }
     }
-    var rotation: SIMD3<Float> = SIMD3<Float>(0, 0, 0) {
+    public var rotation: SIMD3<Float> = SIMD3<Float>(0, 0, 0) {
         didSet {
             updateModelConstant()
         }
     }
     
-    var modelMatrix: simd_float4x4 {
+    public init() { } 
+    
+    public var modelMatrix: simd_float4x4 {
         var result = matrix_identity_float4x4
         
         result.translate(direction: position)
@@ -39,13 +41,13 @@ class TransformComponent: BComponent {
         return result
     }
     
-    var modelConstant: ModelConstants = ModelConstants()
+    public var modelConstant: ModelConstants = ModelConstants()
     
-    func updateModelConstant() {
+    public func updateModelConstant() {
         modelConstant.modelMatrix = modelMatrix
     }
     
-    func setScale(_ value: Float) {
+    open func setScale(_ value: Float) {
         scale = .init(value, value, value)
     }
 }

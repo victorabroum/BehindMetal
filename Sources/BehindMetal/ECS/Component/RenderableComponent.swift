@@ -7,10 +7,10 @@
 
 import BehindECS
 
-class RenderComponent: BComponent {
-    var renderable: Renderable
+public class RenderComponent: BComponent {
+    public var renderable: Renderable
     
-    init(renderable: Renderable) {
+    public init(renderable: Renderable) {
         self.renderable = renderable
     }
 }
