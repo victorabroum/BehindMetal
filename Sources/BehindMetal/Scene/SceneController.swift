@@ -9,11 +9,13 @@
 import MetalKit
 import BehindECS
 
-open class SceneController {
+open class SceneController: Sizeable {
     
     open var sceneConstants = SceneConstants()
     
     public var systems: [BSystem] = []
+    
+    public var lights: [LightData] = Array(repeating: LightData(withComponent: LightComponent()), count: 8)
     
     public var entityManager = BEntityManager()
     
@@ -39,7 +41,22 @@ open class SceneController {
     }
     
     private func setupRenderSystem() {
+        systems.append(LightSystem(entityManager: entityManager))
         systems.append(RenderSystem(entityManager: entityManager))
+    }
+    
+    public func canAddLight() -> Bool {
+        return lights.firstIndex(where: { $0.isActive == 0 }) != nil
+    }
+    
+    public func addLight(_ lightComp: LightComponent) {
+        guard canAddLight() else {
+            print("Cound not add light because we are full! The max amount is 8 lights")
+            return
+        }
+        if let emptySpaceIndex = lights.firstIndex(where: { $0.isActive == 0 }) {
+            lights[emptySpaceIndex] = LightData(withComponent: lightComp)
+        }
     }
 }
 
@@ -48,8 +65,12 @@ extension SceneController: SceneRendererDelegate {
         
         sceneConstants.timeElapsed += time
         
-        commandEncoder.setVertexBytes(&sceneConstants, length: SceneConstants.stride, index: 1)
-        commandEncoder.setFragmentBytes(&sceneConstants, length: SceneConstants.stride, index: 1)
+        commandEncoder.setVertexBytes(&sceneConstants,
+                                      length: SceneConstants.stride,
+                                      index: 1)
+        commandEncoder.setFragmentBytes(&lights,
+                                        length: lights.stride,
+                                        index: 1)
         
         for system in self.systems {
             system.render(commandEncoder: commandEncoder, deltaTime: time)

@@ -54,6 +54,28 @@ public struct SceneConstants: Sizeable {
     var timeElapsed: Float = 0
 }
 
+public struct LightData: Sizeable {
+    var id: Int32
+    var type: Int32
+    var color: SIMD3<Float>
+    var intensity: Float
+    var position: SIMD3<Float>
+    var attenuation: Float
+    var size: Float
+    var isActive: Int32
+    
+    public init(withComponent lightComp: LightComponent) {
+        self.id = lightComp.id
+        self.type = lightComp.type.rawValue
+        self.color = lightComp.color
+        self.intensity = lightComp.intensity
+        self.position = lightComp.position
+        self.attenuation = lightComp.attenuation
+        self.size = lightComp.size
+        self.isActive = lightComp.isActive
+    }
+}
+
 public extension SIMD3 where Scalar == Float {
     static var xAxis: SIMD3<Float> { .init(1, 0, 0) }
     static var yAxis: SIMD3<Float> { .init(0, 1, 0) }

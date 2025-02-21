@@ -73,8 +73,7 @@ open class SpriteMesh: Mesh {
         uvOffset = SIMD2<Float>(Float(column) * uvSize.x, Float(row) * uvSize.y)
         
         let newVertices = SpriteMesh.createVertices(aspectRatio: textureAspectRatio, uvOffset: uvOffset, uvSize: uvSize)
-        vertexBuffer = MetalContext.shared.device.makeBuffer(bytes: newVertices, length: newVertices.stride)!
-//        vertexBuffer.contents().copyMemory(from: newVertices, byteCount: newVertices.stride)
+        vertexBuffer.contents().copyMemory(from: newVertices, byteCount: newVertices.stride)
     }
     
     private static func createVertices(aspectRatio: Float, uvOffset: SIMD2<Float>, uvSize: SIMD2<Float>) -> [Vertex] {

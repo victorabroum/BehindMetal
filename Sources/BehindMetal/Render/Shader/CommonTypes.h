@@ -29,25 +29,32 @@ typedef struct {
     float4x4 modelMatrix;
 } ModelConstants;
 
-typedef struct {
-    float4x4 viewMatrix;
-    float4x4 projectionMatrix;
-    float timeElapsed;
-} SceneConstants;
-
 enum LightType {
     Directional = 0,
     Point = 1,
     Area = 2
 };
 
-typedef struct {
-    LightType type;        // Tipo de luz (direcional, pontual, área)
+typedef struct Light {
+    int id;
+    int type;        // Tipo de luz (direcional, pontual, área)
     float3 color;          // Cor da luz
     float intensity;       // Intensidade da luz
     float3 position;       // Posição da luz (para luz pontual e de área)
     float attenuation;     // Atenuação (para luz pontual)
     float size;            // Tamanho da área iluminada (para luz de área)
+    int isActive;
 } Light;
+
+typedef struct {
+    Light lights[8];
+} LightData;
+
+typedef struct {
+    float4x4 viewMatrix;
+    float4x4 projectionMatrix;
+    float timeElapsed;
+} SceneConstants;
+
 
 #endif /* Header_h */
