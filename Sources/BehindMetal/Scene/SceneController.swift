@@ -41,6 +41,7 @@ open class SceneController: Sizeable {
     }
     
     private func setupRenderSystem() {
+        systems.append(LightOrbitSystem(entityManager: entityManager))
         systems.append(LightSystem(entityManager: entityManager))
         systems.append(RenderSystem(entityManager: entityManager))
     }

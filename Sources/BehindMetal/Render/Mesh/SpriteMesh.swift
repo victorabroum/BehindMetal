@@ -79,16 +79,20 @@ open class SpriteMesh: Mesh {
     private static func createVertices(aspectRatio: Float, uvOffset: SIMD2<Float>, uvSize: SIMD2<Float>) -> [Vertex] {
         return [
             Vertex(position: SIMD3<Float>(-i * aspectRatio, -i, 0),
-                   texCoord: uvOffset + SIMD2<Float>(0, uvSize.y)),
+                   texCoord: uvOffset + SIMD2<Float>(0, uvSize.y),
+                   uvNormal: .init(0, 0, 1)),
             
             Vertex(position: SIMD3<Float>( i * aspectRatio, -i, 0),
-                   texCoord: uvOffset + SIMD2<Float>(uvSize.x, uvSize.y)),
+                   texCoord: uvOffset + SIMD2<Float>(uvSize.x, uvSize.y),
+                   uvNormal: .init(0, 0, 1)),
             
             Vertex(position: SIMD3<Float>( i * aspectRatio,  i, 0),
-                   texCoord: uvOffset + SIMD2<Float>(uvSize.x, 0)),
+                   texCoord: uvOffset + SIMD2<Float>(uvSize.x, 0),
+                   uvNormal: .init(0, 0, 1)),
             
             Vertex(position: SIMD3<Float>(-i * aspectRatio,  i, 0),
-                   texCoord: uvOffset + SIMD2<Float>(0, 0)),
+                   texCoord: uvOffset + SIMD2<Float>(0, 0),
+                   uvNormal: .init(0, 0, 1)),
         ]
     }
 }

@@ -16,7 +16,7 @@ vertex RasterizeData vertex_default2D(const VertexIn vIn [[ stage_in ]],
     rd.position = sceneConstant.projectionMatrix * sceneConstant.viewMatrix * modelConstant.modelMatrix * float4(vIn.position, 1);
     rd.modelPosition = modelConstant.modelMatrix * float4(vIn.position, 1);
     rd.texCoords = vIn.texCoords;
-    rd.uvNormal = normalize(vIn.uvNormal);
+    rd.uvNormal = normalize(float3(0, 0, 1));
     return rd;
 }
 
@@ -43,40 +43,27 @@ fragment float4 fragment_default2D(RasterizeData rd [[ stage_in ]],
         if(light.type == Directional) {
             float3 direction = normalize(light.position); // Direção da luz
             float diffuse = max(dot(normal, direction), 0.0);
+            
+//            return float4((diffuse * 0.5) + 0.5, 0, 0, 1);
+//            return float4((direction * diffuse * 0.5) + 0.5, 1.0);
+            
             finalColor += light.color * light.intensity * diffuse;
-//            return float4(1, 0, 0, 1);
         }else if (light.type == Point) {
+
             float3 lightDir = light.position - rd.modelPosition.xyz;
+
             float distance = length(lightDir);
             lightDir = normalize(lightDir);
-            
-            float diffuse = max(dot(normal, lightDir), 0.0);
+
             float attenuation = 1.0 / (1.0 + light.attenuation * distance * distance);
-            finalColor += light.color * light.intensity * diffuse * attenuation;
             
-//            return float4(0, 0, 1, 1);
+//            float diffuse = max(dot(normal, lightDir), 0.0) * attenuation * light.size;
+            float diffuse = max(dot(normal, 1 - lightDir), 0.0) * attenuation;
+            
+            finalColor += light.color * light.intensity * diffuse;
+            
+//            return float4((lightDir * 0.5) + 0.5, 1.0);
         }
     }
-    
-    // Calculate Diffuse Light
-    //    float time = sceneConstant.timeElapsed;
-    //    float3 lightPosition = float3(sin((-time * 0.5)) * 10, 0, 0);
-    ////    float3 lightPosition = float3(1, 1, 1);
-    //    float3 lightDir = normalize(lightPosition - rd.modelPosition.xyz);
-    //    float3 lightColor = float3(1, 1, 1);
-    //
-    //    float3 diffuseIntensity = max(dot(rd.uvNormal, lightDir), float3(0));
-    //
-    ////    float4 colorTint = float4(sin(time * 0.1) + 1, 1, 0, 1) * textureColor;
-    //    float4 colorTint = float4(1, 0.4, 1, 1) * textureColor;
-    //
-    ////    return colorTint;
-    //
-    ////    float3 finalColor = textureColor.rgb * (lightColor * diffuseIntensity + 0.3);
-    //    float3 finalColor = colorTint.rgb * (lightColor * diffuseIntensity + 0.3);
-    //
-    
-    //    return float4(finalColor, textureColor.a);
-    
     return float4(finalColor.rgb, textureColor.a);
 }
